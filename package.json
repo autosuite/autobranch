@@ -1,34 +1,25 @@
 {
-  "name": "javascript-template-action",
-  "version": "0.0.0",
+  "name": "autobranch",
+  "version": "0.1.0",
   "private": true,
-  "description": "JavaScript template action",
-  "main": "dist/index.js",
+  "description": "A GitHub Action that automatically creates `issue/initial/#-description`-style branches and WIP pull requests from a GitHub event payload.",
+  "main": "dist/main.js",
   "scripts": {
-    "build": "tsc",
-    "test": "jest"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/javascript-template.git"
+    "url": "git+https://github.com/autosuite/autobranch.git"
   },
-  "keywords": [
-    "actions",
-    "node",
-    "setup"
-  ],
-  "author": "YourNameOrOrganization",
+  "keywords": [],
+  "author": "Inkling Interactive",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "1.2.0",
-    "@actions/github": "1.1.0"
+    "@actions/core": "^1.2.0",
+    "@actions/github": "^2.1.1"
   },
   "devDependencies": {
-    "@types/jest": "24.0.16",
-    "@types/node": "12.6.9",
-    "jest": "24.8.0",
-    "jest-circus": "24.8.0",
-    "ts-jest": "24.0.2",
-    "typescript": "3.5.3"
+    "@types/node": "^13.5.0",
+    "typescript": "^3.7.5"
   }
 }

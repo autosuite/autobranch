@@ -1,0 +1,13 @@
+name: Issue Autobranch and PR
+
+on:
+  issues:
+    types: [assigned]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: autosuite/autobranch@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

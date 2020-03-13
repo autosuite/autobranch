@@ -1,13 +1,13 @@
-name: 'Create Branch'
-description: 'Creates a branch'
-author: 'Peter Grainger (peter@grainger)'
+name: 'Autobranch'
+description: 'A GitHub Action that automatically creates `issue/#-description`-style branches and WIP pull requests from a GitHub event payload.'
+author: 'Inkling Interactive'
 branding:
   icon: 'git-branch' 
-  color: 'green'
+  color: 'red'
 inputs:
-  branch:
-    description: 'The branch to create'
-    default: 'release-candidate'
+  github_token:
+    required: true
+    description: 'The GitHub token..'
 runs:
   using: 'node12'
-  main: 'dist/index.js'
+  main: 'dist/main.js'

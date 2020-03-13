@@ -1,0 +1,13 @@
+name: "Test Action"
+
+on: [pull_request, push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.0.0
+      - name: Build
+        run: |
+          npm ci
+          npx tsc
