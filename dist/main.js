@@ -47,25 +47,22 @@ var core = __importStar(require("@actions/core"));
 var octokit = __importStar(require("@octokit/rest"));
 var branch_1 = require("./git/branch");
 var issue_1 = require("./git/issue");
-var pull_request_1 = require("./git/pull-request");
 var GITHUB_TOKEN_INPUT_KEY = "github_token";
 function run() {
     return __awaiter(this, void 0, void 0, function () {
-        var toolkit_1, issueResponse_1, branchName_1, error_1;
+        var toolkit, issueResponse, branchName, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 4, , 5]);
-                    toolkit_1 = new octokit.Octokit({
-                        "auth": core.getInput(GITHUB_TOKEN_INPUT_KEY)
-                    });
-                    return [4, issue_1.getIssueContents(toolkit_1)];
+                    toolkit = new octokit.Octokit({ "auth": core.getInput(GITHUB_TOKEN_INPUT_KEY) });
+                    return [4, issue_1.getIssueContents(toolkit)];
                 case 1:
-                    issueResponse_1 = _a.sent();
-                    return [4, branch_1.determineBranchName(issueResponse_1.title)];
+                    issueResponse = _a.sent();
+                    return [4, branch_1.determineBranchName(issueResponse.title)];
                 case 2:
-                    branchName_1 = _a.sent();
-                    return [4, branch_1.createBranch(toolkit_1, branchName_1).then(function (_) { return pull_request_1.createPullRequest(toolkit_1, issueResponse_1, branchName_1); })];
+                    branchName = _a.sent();
+                    return [4, branch_1.createBranch(toolkit, branchName)];
                 case 3:
                     _a.sent();
                     return [3, 5];

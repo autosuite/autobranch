@@ -17,8 +17,7 @@
 ## Introduction
 
 Autobranch is a GitHub Action for the `issues` event. It automatically creates
-`issue/<number>-<short_description>`-style issues, e.g.: `issue/311-migrate-editor`, and a corresponding WIP pull
-request (PR).
+`issue/<number>-<short_description>`-style issues, e.g.: `issue/311-migrate-editor`.
 
 ## Usage
 

@@ -15,7 +15,7 @@ export async function shortenTitle(title: string): Promise<string> {
   return title.toLowerCase()
     .replace(/[^A-Za-z ]/gi, "")
     .split(" ")
-    .slice(SHORTENED_WORD_COUNT)
+    .slice(0, SHORTENED_WORD_COUNT)
     .join("-");
 }
 

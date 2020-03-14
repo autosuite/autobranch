@@ -3,7 +3,6 @@ import * as octokit from '@octokit/rest';
 
 import {createBranch, determineBranchName} from "./git/branch";
 import {getIssueContents} from "./git/issue";
-import {createPullRequest} from "./git/pull-request";
 
 /**
  * The key name for the GitHub secret access token.
@@ -14,9 +13,7 @@ async function run() {
   try {
     /* Initialize the GitHub/Octokit toolkit. */
 
-    const toolkit: octokit.Octokit = new octokit.Octokit({
-      "auth": core.getInput(GITHUB_TOKEN_INPUT_KEY)
-    });
+    const toolkit: octokit.Octokit = new octokit.Octokit({"auth": core.getInput(GITHUB_TOKEN_INPUT_KEY)});
 
     /* Gather and cache. */
 
@@ -25,7 +22,7 @@ async function run() {
 
     /* Open the branch from the branch name. */
 
-    await createBranch(toolkit, branchName).then(_ => createPullRequest(toolkit, issueResponse, branchName));
+    await createBranch(toolkit, branchName);
 } catch (error) {
     core.setFailed(error.message);
   }
