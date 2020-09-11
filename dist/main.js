@@ -45,9 +45,64 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core = __importStar(require("@actions/core"));
 var octokit = __importStar(require("@octokit/rest"));
-var branch_1 = require("./git/branch");
-var issue_1 = require("./git/issue");
+var github = __importStar(require("@actions/github"));
 var GITHUB_TOKEN_INPUT_KEY = "github_token";
+var SHORTENED_WORD_COUNT = 3;
+function createBranch(toolkit, branchName) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            core.info("Creating branch: `" + branchName + "`.");
+            return [2, toolkit.git.createRef({
+                    ref: "refs/heads/" + branchName,
+                    sha: github.context.sha,
+                    owner: github.context.repo.owner,
+                    repo: github.context.repo.repo,
+                }).then(function (response) { return response.data; })];
+        });
+    });
+}
+function shortenTitle(title) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            return [2, title.toLowerCase()
+                    .replace(/[^A-Za-z ]/gi, "")
+                    .split(" ")
+                    .slice(0, SHORTENED_WORD_COUNT)
+                    .join("-")];
+        });
+    });
+}
+function determineBranchName(issueTitle) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    _a = "issue/" + github.context.issue.number + "-";
+                    return [4, shortenTitle(issueTitle)];
+                case 1: return [2, _a + (_b.sent())];
+            }
+        });
+    });
+}
+function getIssueContents(toolkit) {
+    return __awaiter(this, void 0, void 0, function () {
+        var issueOwner, issueRepo;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    issueOwner = github.context.issue.owner;
+                    issueRepo = github.context.issue.repo;
+                    return [4, toolkit.issues.get({
+                            owner: issueOwner,
+                            repo: issueRepo,
+                            issue_number: github.context.issue.number
+                        }).then(function (response) { return response.data; })];
+                case 1: return [2, _a.sent()];
+            }
+        });
+    });
+}
 function run() {
     return __awaiter(this, void 0, void 0, function () {
         var toolkit, issueResponse, branchName, error_1;
@@ -56,13 +111,13 @@ function run() {
                 case 0:
                     _a.trys.push([0, 4, , 5]);
                     toolkit = new octokit.Octokit({ "auth": core.getInput(GITHUB_TOKEN_INPUT_KEY) });
-                    return [4, issue_1.getIssueContents(toolkit)];
+                    return [4, getIssueContents(toolkit)];
                 case 1:
                     issueResponse = _a.sent();
-                    return [4, branch_1.determineBranchName(issueResponse.title)];
+                    return [4, determineBranchName(issueResponse.title)];
                 case 2:
                     branchName = _a.sent();
-                    return [4, branch_1.createBranch(toolkit, branchName)];
+                    return [4, createBranch(toolkit, branchName)];
                 case 3:
                     _a.sent();
                     return [3, 5];
